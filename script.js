@@ -4,7 +4,7 @@
         }
 
         const JSOrganization = getJSOrganization();
-        document.querySelectorAll('[id^="JSOrganization-placeholder"]').forEach(el => el.textContent = JSOrganization);
+        document.querySelectorAll('[id^="JSOrganization-placeholder"]').forEach(el => el.textContent = vanshcz);
 
         function showProposal(id) {
             document.querySelectorAll('.proposal-screen').forEach(screen => screen.style.display = 'none');
