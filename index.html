@@ -2,61 +2,394 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Will You Be Mine? 💖</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-   <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#ff2d75">
+    <meta name="description" content="A special message for someone special 💖">
+    <title>💖 A Special Message For You 💖</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Quicksand:wght@300;400;500;600;700&family=Pacifico&family=Sacramento&display=swap" rel="stylesheet">
+    
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="container">
-        <div id="proposal-1" class="proposal-screen">
-            <div id="Sowrov1" class="sticker"></div>
-            <h1>Hey <span id="JSOrganization-placeholder"></span>! 💖</h1>
-            <p>I love you more than anything. Will you be mine forever?</p>
-            <div class="btn">
-                <a href="#" onclick="showProposal('proposal-yes')">💖 Yes</a>
-                <a href="#" onclick="showProposal('proposal-2')">💔 No</a>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-heart">
+                <span>💖</span>
             </div>
-        </div>
-
-        <div id="proposal-2" class="proposal-screen">
-            <div id="Sowrov2" class="sticker"></div>
-            <h1>Are you sure? 🥺</h1>
-            <p>You mean everything to me. Please say yes!</p>
-            <div class="btn">
-                <a href="#" onclick="showProposal('proposal-yes')">🥰 Yes</a>
-                <a href="#" onclick="showProposal('proposal-3')">😢 No</a>
+            <h2 class="preloader-text">Preparing something special...</h2>
+            <div class="preloader-progress">
+                <div class="preloader-progress-bar"></div>
             </div>
-        </div>
-
-        <div id="proposal-3" class="proposal-screen">
-            <div id="Sowrov3" class="sticker"></div>
-            <h1>My heart is breaking... 💔</h1>
-            <p>I can't imagine my life without you. Please give us a chance!</p>
-            <div class="btn">
-                <a href="#" onclick="showProposal('proposal-yes')">😍 Yes</a>
-                <a href="#" onclick="showProposal('proposal-4')">😭 No</a>
-            </div>
-        </div>
-
-        <div id="proposal-4" class="proposal-screen">
-            <div id="Sowrov4" class="sticker"></div>
-            <h1>Don't leave me... 😭</h1>
-            <p>You're my everything. Please say yes and make me the happiest person!</p>
-            <div class="btn">
-                <a href="#" onclick="showProposal('proposal-yes')">❤️ Yes</a>
-                <a href="#" id="move-random">💔 No</a>
-            </div>
-        </div>
-
-        <div id="proposal-yes" class="proposal-screen">
-            <div id="Sowrov5" class="sticker"></div>
-            <h1>You said YES! 🥰</h1>
-            <p>I love you, <span id="JSOrganization-placeholder-5"></span>. Let's make forever amazing! 💞</p>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Background Effects -->
+    <div class="background-effects">
+        <div class="aurora"></div>
+        <div class="aurora aurora-2"></div>
+        <canvas id="particles-canvas"></canvas>
+        <div class="floating-hearts" id="floating-hearts"></div>
+    </div>
+
+    <!-- Cursor Effects (Desktop Only) -->
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <!-- Main Application -->
+    <main class="app">
+        <div class="card" id="main-card">
+            <!-- Decorative Elements -->
+            <div class="card-decorations">
+                <span class="decoration">💕</span>
+                <span class="decoration">✨</span>
+                <span class="decoration">💗</span>
+                <span class="decoration">🌸</span>
+                <span class="decoration">💖</span>
+                <span class="decoration">🦋</span>
+                <span class="decoration">💫</span>
+                <span class="decoration">🌹</span>
+            </div>
+
+            <!-- Screen 1: Welcome -->
+            <section class="screen active" id="screen-1" data-screen="1">
+                <div class="sticker-wrapper">
+                    <div class="sticker-glow"></div>
+                    <div class="sticker" id="sticker-1"></div>
+                </div>
+                
+                <div class="content">
+                    <h1 class="title">
+                        Hey <span class="name-highlight person-name">My Love</span>! 
+                        <span class="emoji-float">💖</span>
+                    </h1>
+                    <p class="subtitle">I have something very special to ask you...</p>
+                    
+                    <div class="message-box">
+                        <p>Every single day with you feels like a beautiful dream. You've captured my heart completely, and I can't imagine my life without you.</p>
+                    </div>
+                    
+                    <p class="question">
+                        <span class="highlight">Will you be mine forever?</span> 💝
+                    </p>
+                    
+                    <div class="buttons">
+                        <button class="btn btn-yes" onclick="navigateTo('final')">
+                            <span class="btn-icon">💖</span>
+                            <span class="btn-text">Yes, I'm Yours!</span>
+                            <span class="btn-shine"></span>
+                        </button>
+                        <button class="btn btn-no" onclick="navigateTo(2)">
+                            <span class="btn-icon">🤔</span>
+                            <span class="btn-text">Let me think...</span>
+                        </button>
+                    </div>
+                    
+                    <div class="progress-indicator">
+                        <span class="progress-dot active" data-step="1"></span>
+                        <span class="progress-line"></span>
+                        <span class="progress-dot" data-step="2"></span>
+                        <span class="progress-line"></span>
+                        <span class="progress-dot" data-step="3"></span>
+                        <span class="progress-line"></span>
+                        <span class="progress-dot" data-step="4"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen 2: Pleading -->
+            <section class="screen" id="screen-2" data-screen="2">
+                <div class="sticker-wrapper">
+                    <div class="sticker-glow"></div>
+                    <div class="sticker" id="sticker-2"></div>
+                </div>
+                
+                <div class="content">
+                    <h1 class="title">
+                        Wait, really? 
+                        <span class="emoji-float">🥺</span>
+                    </h1>
+                    <p class="subtitle">Look into my eyes... can you say no?</p>
+                    
+                    <div class="love-meter-section">
+                        <div class="love-meter-header">
+                            <span class="love-meter-label">My Love For You</span>
+                            <span class="love-meter-value">75%</span>
+                        </div>
+                        <div class="love-meter">
+                            <div class="love-meter-fill" data-value="75"></div>
+                            <div class="love-meter-glow"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="reasons-carousel">
+                        <h3 class="reasons-title">💝 Why I Love You</h3>
+                        <div class="reasons-container">
+                            <div class="reason active">Your smile brightens my darkest days ☀️</div>
+                            <div class="reason">Your laugh is my favorite sound 🎵</div>
+                            <div class="reason">You make ordinary moments magical ✨</div>
+                            <div class="reason">Your kindness inspires me daily 💕</div>
+                            <div class="reason">You're my best friend & soulmate 👫</div>
+                        </div>
+                        <div class="reasons-dots">
+                            <span class="reason-dot active"></span>
+                            <span class="reason-dot"></span>
+                            <span class="reason-dot"></span>
+                            <span class="reason-dot"></span>
+                            <span class="reason-dot"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="buttons">
+                        <button class="btn btn-yes" onclick="navigateTo('final')">
+                            <span class="btn-icon">🥰</span>
+                            <span class="btn-text">Okay, YES!</span>
+                            <span class="btn-shine"></span>
+                        </button>
+                        <button class="btn btn-no" onclick="navigateTo(3)">
+                            <span class="btn-icon">😢</span>
+                            <span class="btn-text">Still not sure...</span>
+                        </button>
+                    </div>
+                    
+                    <div class="progress-indicator">
+                        <span class="progress-dot completed" data-step="1"></span>
+                        <span class="progress-line completed"></span>
+                        <span class="progress-dot active" data-step="2"></span>
+                        <span class="progress-line"></span>
+                        <span class="progress-dot" data-step="3"></span>
+                        <span class="progress-line"></span>
+                        <span class="progress-dot" data-step="4"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen 3: Emotional -->
+            <section class="screen" id="screen-3" data-screen="3">
+                <div class="sticker-wrapper">
+                    <div class="sticker-glow"></div>
+                    <div class="sticker" id="sticker-3"></div>
+                </div>
+                
+                <div class="content">
+                    <h1 class="title">
+                        My heart is breaking... 
+                        <span class="emoji-float">💔</span>
+                    </h1>
+                    <p class="subtitle">Please don't let it shatter completely...</p>
+                    
+                    <div class="love-meter-section">
+                        <div class="love-meter-header">
+                            <span class="love-meter-label">Love Intensity</span>
+                            <span class="love-meter-value">90%</span>
+                        </div>
+                        <div class="love-meter">
+                            <div class="love-meter-fill" data-value="90"></div>
+                            <div class="love-meter-glow"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="message-box emotional">
+                        <p>You're my sunshine on rainy days, my calm in every storm, my reason to smile. I've never felt this way about anyone before.</p>
+                        <p class="highlight">Please give us a chance to write our beautiful love story together! 📖💕</p>
+                    </div>
+                    
+                    <div class="buttons">
+                        <button class="btn btn-yes" onclick="navigateTo('final')">
+                            <span class="btn-icon">😍</span>
+                            <span class="btn-text">Yes! I Choose You!</span>
+                            <span class="btn-shine"></span>
+                        </button>
+                        <button class="btn btn-no" onclick="navigateTo(4)">
+                            <span class="btn-icon">😭</span>
+                            <span class="btn-text">I need more convincing...</span>
+                        </button>
+                    </div>
+                    
+                    <div class="progress-indicator">
+                        <span class="progress-dot completed" data-step="1"></span>
+                        <span class="progress-line completed"></span>
+                        <span class="progress-dot completed" data-step="2"></span>
+                        <span class="progress-line completed"></span>
+                        <span class="progress-dot active" data-step="3"></span>
+                        <span class="progress-line"></span>
+                        <span class="progress-dot" data-step="4"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen 4: Final Plea -->
+            <section class="screen" id="screen-4" data-screen="4">
+                <div class="sticker-wrapper">
+                    <div class="sticker-glow"></div>
+                    <div class="sticker" id="sticker-4"></div>
+                </div>
+                
+                <div class="content">
+                    <h1 class="title">
+                        Please... This is my final plea 
+                        <span class="emoji-float">😭</span>
+                    </h1>
+                    <p class="subtitle">My heart can't take much more...</p>
+                    
+                    <div class="love-meter-section">
+                        <div class="love-meter-header">
+                            <span class="love-meter-label">❤️ MAXIMUM LOVE</span>
+                            <span class="love-meter-value">100%</span>
+                        </div>
+                        <div class="love-meter overflow">
+                            <div class="love-meter-fill" data-value="100"></div>
+                            <div class="love-meter-glow"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="promise-box">
+                        <div class="promise-icon">🤞</div>
+                        <h3>My Promise To You</h3>
+                        <ul class="promise-list">
+                            <li>💕 To love you unconditionally, always</li>
+                            <li>🌟 To support all your dreams</li>
+                            <li>🤗 To be your safe place</li>
+                            <li>😊 To make you smile every day</li>
+                            <li>💪 To stand by you through everything</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="buttons">
+                        <button class="btn btn-yes btn-large" onclick="navigateTo('final')">
+                            <span class="btn-icon">❤️</span>
+                            <span class="btn-text">YES! I LOVE YOU!</span>
+                            <span class="btn-shine"></span>
+                        </button>
+                        <button class="btn btn-no btn-escape" id="escape-btn">
+                            <span class="btn-icon">💔</span>
+                            <span class="btn-text">No</span>
+                        </button>
+                    </div>
+                    
+                    <div class="progress-indicator">
+                        <span class="progress-dot completed" data-step="1"></span>
+                        <span class="progress-line completed"></span>
+                        <span class="progress-dot completed" data-step="2"></span>
+                        <span class="progress-line completed"></span>
+                        <span class="progress-dot completed" data-step="3"></span>
+                        <span class="progress-line completed"></span>
+                        <span class="progress-dot active" data-step="4"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen Final: Celebration -->
+            <section class="screen screen-final" id="screen-final" data-screen="final">
+                <div class="sticker-wrapper large">
+                    <div class="sticker-glow rainbow"></div>
+                    <div class="sticker" id="sticker-5"></div>
+                </div>
+                
+                <div class="content">
+                    <div class="celebration-badge">🎉 YAYYY! 🎉</div>
+                    
+                    <h1 class="title celebration">
+                        You Said YES!
+                        <span class="emoji-float">💖</span>
+                    </h1>
+                    
+                    <p class="subtitle celebration-sub">This is the happiest moment of my life!</p>
+                    
+                    <div class="love-letter">
+                        <div class="letter-seal">💝</div>
+                        <div class="letter-content">
+                            <p>My Dearest <span class="person-name">Love</span>,</p>
+                            <p>From this moment forward, I promise to:</p>
+                            <p>Love you when skies are blue and when storms arise. Hold your hand through every adventure. Be your biggest fan, your shoulder to cry on, your partner in crime, and your forever person.</p>
+                            <p>Thank you for choosing me. Let's create a lifetime of beautiful memories together.</p>
+                            <p class="letter-signature">Forever & Always Yours,<br>💕 With All My Love 💕</p>
+                        </div>
+                    </div>
+                    
+                    <div class="celebration-emojis">
+                        <span>💑</span>
+                        <span>💍</span>
+                        <span>🎊</span>
+                        <span>🥂</span>
+                        <span>💐</span>
+                    </div>
+                    
+                    <div class="our-story">
+                        <h3>📖 Our Story Begins</h3>
+                        <p class="story-date" id="story-date"></p>
+                    </div>
+                    
+                    <div class="love-meter-section final">
+                        <div class="love-meter-header">
+                            <span class="love-meter-label">Our Love</span>
+                            <span class="love-meter-value">∞ INFINITE</span>
+                        </div>
+                        <div class="love-meter rainbow-meter">
+                            <div class="love-meter-fill" data-value="100"></div>
+                            <div class="love-meter-glow"></div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-share" onclick="shareExperience()">
+                        <span class="btn-icon">📸</span>
+                        <span class="btn-text">Capture This Moment</span>
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Music Player -->
+    <div class="music-player" id="music-player">
+        <div class="music-visualizer" id="music-visualizer">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <button class="music-btn" id="music-btn" aria-label="Toggle Music">
+            <span class="music-icon">🎵</span>
+        </button>
+        <div class="music-tooltip">Tap to play music</div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+        <button class="action-btn" id="fullscreen-btn" aria-label="Toggle Fullscreen">
+            <span>⛶</span>
+        </button>
+        <button class="action-btn" id="theme-btn" aria-label="Toggle Theme">
+            <span>🎨</span>
+        </button>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="bg-music" loop preload="auto">
+        <!-- Romantic Background Music Options -->
+        <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Shipping_Lanes.mp3" type="audio/mpeg">
+        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Sound Effects -->
+    <audio id="sound-pop" preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="sound-success" preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Script -->
+    <script src="js/script.js"></script>
 </body>
 </html>
